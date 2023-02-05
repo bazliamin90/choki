@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Choki-choki</title>
+    <style>
+      body {
+        text-align: center;
+		margin: 0;
+		background-color: #5CC4FD;
+      }
+
+	  ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		background-color: #333;
+		position: fixed;
+		top: 0;
+		width: 100%;
+	  }
+
+	  li {
+		float: left;
+	  }
+
+	  li a {
+		display: block;
+		color: white;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+		font-family: courier new;
+	  }
+
+	  li a:hover:not(.active) {
+		background-color: #111;
+	  }
+
+	  .active {
+		background-color: #04AA6D;
+	  }
+
+	  h2{
+		font-family: courier new;
+		padding-top: 10px;
+	  }
+
+      select {
+        width: auto;
+        margin: 5px;
+		font-size: 16px;
+		border: 2px solid black;
+		border-radius: 4px;
+      }
+
+      .images {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .images img {
+        width: 12%;
+        height: auto;
+        margin: 2%;
+		border: 6px solid yellow;
+		border-radius: 30px;
+		box-shadow: 10px 10px 5px gray;
+      }
+
+      button {
+        margin: 10px;
+		font-size: 16px;
+		padding-top: 1px;
+		border: 2px solid black;
+		border-radius: 4px;
+      }
+
+      button#button2 {
+        display: block;
+        margin: 20px auto;
+      }
+    </style>
+  </head>
+  <ul>
+  <li><a class="active" href="index.html">Choki-choki</a></li>
+  <li><a href="https://bazliamin90.github.io/mecha/">Mecha</a></li>
+  </ul><br>
+  <body>
+  <h2>Choki-choki Card Guessing Game</h2>
+    <select id="mySelect">
+	  <option value="">--Image amount--</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+    <button onclick="submitFunction()">Submit</button>
+    <div id="displayArea" class="images"></div>
+    <button id="button2" style="display: none;" onclick="changeFunction()">Flip all except one</button>
+    <script>
+      var imageFiles = [
+	  "./img/1.jpg", 
+	  "./img/2.jpg", 
+	  "./img/3.jpg", 
+	  "./img/4.jpg"];
+      function submitFunction() {
+        var x = document.getElementById("mySelect").value;
+        var displayArea = document.getElementById("displayArea");
+        displayArea.innerHTML = "";
+        var usedIndexes = [];
+        for (var i = 0; i < x; i++) {
+          var randomIndex = Math.floor(Math.random() * imageFiles.length);
+          while (usedIndexes.includes(randomIndex)) {
+            randomIndex = Math.floor(Math.random() * imageFiles.length);
+          }
+          usedIndexes.push(randomIndex);
+          var img = document.createElement("img");
+          img.src = imageFiles[randomIndex];
+          displayArea.appendChild(img);
+        }
+        setTimeout(function() {
+          document.getElementById("button2").style.display = "block";
+        }, 2000);
+      }
+
+      function changeFunction() {
+        var images = document.querySelectorAll("#displayArea img");
+        var randomIndex = Math.floor(Math.random() * images.length);
+        for (var i = 0; i < images.length; i++) {
+          if (i !== randomIndex) {
+            images[i].src = "./img/cross.png";
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
